@@ -5,8 +5,6 @@ import redis
 
 config = get_config()
 
-SENDGRID_API_KEY = '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'
-
 # Activation email template
 ACTIVATION_EMAIL = "<p>Hi,</p><p>Click on the link below to activate Jarvis:</p>" \
                    "<p><a href='https://t.me/{bot_user_name}?start={secret}'>" \

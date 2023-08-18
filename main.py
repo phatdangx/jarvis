@@ -6,12 +6,12 @@
 
 from telegram.ext import Updater, CommandHandler
 
-from botheart.auth import *
 from cmd.admin import AdminCommand
 from cmd.hr import HrCommand
 from cmd.marketing import MarketingCommand
 from cmd.sales import SalesCommand
 from utils.constants import TOKEN
+from utils.decorator import *
 from config import Config
 
 import logging

@@ -58,25 +58,15 @@ def verify_user_init():
             update = args[0]
             context = args[1]
 
-            ctx_args = context.args
             bot = context.bot
-            if len(ctx_args) != 1:
-                bot.sendMessage(
-                    chat_id=update.message.chat_id,
-                    text="⛔️ Missing SECRET CODE",
-                    reply_to_message_id=update.message.message_id
-                )
-                return
-            access_code = ctx_args[0]
-            secret_code = access_code[:4]
-            employee_id = access_code[4:]
+
             username = update.message.from_user.name
             user_id = update.message.from_user.id
             user = User(
                 name=username,
                 user_id=user_id,
-                employee_id=employee_id
             )
+            
             # Check if user is allowed to use bot
             is_allowed = user.has_been_added()
             if not is_allowed:
@@ -86,15 +76,7 @@ def verify_user_init():
                     reply_to_message_id=update.message.message_id
                 )
                 return
-            # Check if user enter correct secret code
-            is_secret_correct = user.verify_secret_code(secret_code)
-            if not is_secret_correct:
-                bot.sendMessage(
-                    chat_id=update.message.chat_id,
-                    text="⛔️ Your secret is not correct".format(ADMIN_CONTACT),
-                    reply_to_message_id=update.message.message_id
-                )
-                return
+
             result = func(*args, **kwargs)
             return result
 
