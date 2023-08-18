@@ -1,0 +1,59 @@
+# Compiled binary files
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Compiled object files, libraries, and executables
+*.o
+*.obj
+*.a
+*.out
+
+# Temporary files and logs
+*.log
+*.tmp
+*.swp
+.vscode/
+.idea/
+*.DS_Store
+
+# Dependency directories (e.g. for Node.js and Python)
+node_modules/
+__pycache__/
+
+# Compiled Python files
+*.pyc
+*.pyo
+__pycache__/
+
+# Compiled Java classes
+*.class
+
+# Compiled Ruby files
+*.gem
+*.rbc
+*.rbo
+*.rbs
+*.gemspec
+*.yarb
+
+# Compiled TypeScript files
+*.js
+*.js.map
+
+# Compiled CSS files
+*.css
+*.css.map
+
+# Compiled Sass/SCSS files
+*.sass
+*.scss
+
+# Compiled Less files
+*.less
+
+# Compiled Swift files
+*.swiftmodule
+*.swiftdoc
+*.swiftinterface

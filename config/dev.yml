@@ -1,0 +1,13 @@
+env: dev
+
+log_level: DEBUG
+
+admin: bunboque
+
+jarvis:
+  token: 1349023026:AAGz5lgqji9iXelbS1N7t_--Q76UZUTcwVk
+  user_name: jarvis_ahm_dev_bot
+
+mongodb:
+  host: "xxx"
+  database: telegram_bot
