@@ -1,6 +1,7 @@
 from telegram.ext import CommandHandler
 from telegram.parsemode import ParseMode
 from utils.decorator import *
+from db.user import *
 
 class AdminCommand(object):
     """
@@ -81,26 +82,21 @@ class AdminCommand(object):
         employee_id = args[0]
         email = args[1]
         group = args[2]
-        secret = generate_secret()
-        access_code = str(secret) + str(employee_id)
-        new_jarvis_user = {
+        
+        new_user = {
             "employee_id": employee_id,
             "email": email,
             "group": group.upper(),
-            "secret": secret
         }
-        dblog.jarvis_user.insert_one(new_jarvis_user)
-        send_email(
-            subject="{} - Jarvis Bot Activation".format(config["env"].upper()),
-            body=ACTIVATION_EMAIL.format(
-                bot_user_name=config["jarvis"]["user_name"],
-                secret=access_code
-            ),
-            to_addresses=[email]
-        )
+        
+        r = insert_new_user(new_user)
+        mess = "Add {} successfully".format(employee_id)
+        if r is False:
+            mess = "Failed to add {}".format(employee_id)
+
         bot.sendMessage(
             chat_id=update.message.chat_id,
-            text="Add {} successfully".format(employee_id),
+            text=mess,
             reply_to_message_id=update.message.message_id
         )
 

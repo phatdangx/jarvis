@@ -14,8 +14,6 @@ from utils.constants import TOKEN
 from utils.decorator import *
 from config import Config
 
-import logging
-
 
 @verify_user_init()
 def start_handler(update, context):
@@ -34,10 +32,6 @@ def main():
     """
         Main program of Jarvis
     """
-    # Set up logging
-    logger = logging.getLogger()
-    log_level = Config["log_level"]
-    logger.setLevel(log_level)
 
     # Updater
     updater = Updater(TOKEN, use_context=True)
