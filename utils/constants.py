@@ -25,6 +25,37 @@ HR_HELP_DICT = {
     )
 }
 
+MAR_HELP_DICT = {
+    "cp_track": HELP_TEMPLATE.format(
+        command_order=1,
+        command_help="Instant view marketing campaign metric",
+        command_synctax="/campaign_track <campaign_id>",
+        command_ex="/campaign_track fb_114"
+    ),
+    "cp_list": HELP_TEMPLATE.format(
+        command_order=2,
+        command_help="List all of campaign in the last N days",
+        command_synctax="/cp_list <days>",
+        command_ex="/cp_list 7"
+    )
+}
+
+
+SALES_HELP_DICT = {
+    "product_info": HELP_TEMPLATE.format(
+        command_order=1,
+        command_help="Instant get product information",
+        command_synctax="/product_info <product_id>",
+        command_ex="/product_info 28"
+    ),
+    "leaderboard": HELP_TEMPLATE.format(
+        command_order=2,
+        command_help="View top sales performance",
+        command_synctax="/leaderboard",
+        command_ex="/leaderboard"
+    )
+}
+
 
 # Available groups
 HR = "hr"
