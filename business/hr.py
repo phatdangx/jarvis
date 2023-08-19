@@ -5,3 +5,4 @@ def get_employee_info(employee_id):
 
 def view_employee_pto(employee_id):
     message = "Employee {} has requested PTO. Reason: Vacation".format(employee_id)
+    return message
