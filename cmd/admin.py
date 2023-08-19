@@ -1,7 +1,7 @@
 from telegram.ext import CommandHandler
 from telegram.parsemode import ParseMode
 from utils.decorator import *
-from db.user import *
+from business.admin import *
 
 class AdminCommand(object):
     """
@@ -79,24 +79,15 @@ class AdminCommand(object):
                 reply_to_message_id=update.message.message_id
             )
             return
-        employee_id = args[0]
-        email = args[1]
-        group = args[2]
-        
         new_user = {
-            "employee_id": employee_id,
-            "email": email,
-            "group": group.upper(),
+            "employee_id": args[0],
+            "email": args[1],
+            "group": args[2].lower(),
         }
-        
-        r = insert_new_user(new_user)
-        mess = "Add {} successfully".format(employee_id)
-        if r is False:
-            mess = "Failed to add {}".format(employee_id)
-
+        message = insert_new_user(new_user)
         bot.sendMessage(
             chat_id=update.message.chat_id,
-            text=mess,
+            text=message,
             reply_to_message_id=update.message.message_id
         )
 
@@ -114,11 +105,15 @@ class AdminCommand(object):
         """
         bot = context.bot
         args = context.args
-        if len(args) != 2:
-            message = "Usage: rmuser <user> <group>"
+        if len(args) > 1:
+            message = "Usage: rmu <employee_id>"
             bot.sendMessage(chat_id=update.message.chat_id, text=message)
             return
 
-        message = "Being dev"
+        message = remove_user_by_employee_id(args[0])
 
-        bot.sendMessage(chat_id=update.message.chat_id, text=message)
+        bot.sendMessage(
+            chat_id=update.message.chat_id, 
+            text=message,
+            reply_to_message_id=update.message.message_id
+        )
