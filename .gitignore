@@ -60,3 +60,6 @@ __pycache__/
 
 # Env
 .env/
+
+# mount data backup
+data/
