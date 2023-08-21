@@ -57,3 +57,6 @@ __pycache__/
 *.swiftmodule
 *.swiftdoc
 *.swiftinterface
+
+# Env
+.env/
