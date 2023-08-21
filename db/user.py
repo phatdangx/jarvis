@@ -6,6 +6,7 @@ import time
 
 def find_user_by_telegram_id(id):
     user = db.user.find_one({"telegram_id": str(id)})
+    return user
 
 
 def insert_new_user(data):

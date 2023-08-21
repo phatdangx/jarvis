@@ -9,5 +9,5 @@ jarvis:
   user_name: jarvis_ahm_dev_bot
 
 mongodb:
-  host: "xxx"
+  host: "localhost"
   database: telegram_bot

@@ -2,7 +2,6 @@
 """
     Provides the Jarvis User class.
 """
-from botheart import dblog, dblogr, redis_client, redis_key_pattern
 from db.user import *
 
 import json
