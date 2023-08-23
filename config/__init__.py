@@ -17,5 +17,15 @@ def get_config():
     logging.info("config {}".format(config.data))
     return config.data
 
+
+mongo_host = os.getenv("MONGO_HOST")
+mongo_username = os.getenv("MONGO_USERNAME")
+mongo_password = os.getenv("MONGO_PASSWORD")
+
 Config = get_config()
+if mongo_host:
+    Config["mongodb"]["host"] = mongo_host
+    Config["mongodb"]["username"] = mongo_username
+    Config["mongodb"]["password"] = mongo_password
+
 

@@ -1,7 +1,13 @@
 version: '3'
 services:
   telegrambot:
-    image: jarvis-telegram-bot:v1.0.0
+    image: jarvis-telegram-bot:v1.0.1
+    environment:
+      - MONGO_HOST=mongodb
+      - MONGO_USERNAME=user
+      - MONGO_PASSWORD=admin2023
+    depends_on:
+      - mongodb
   mongodb:
     image: mongodb/mongodb-community-server:6.0-ubi8
     environment:
