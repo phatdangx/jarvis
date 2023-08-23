@@ -1,6 +1,6 @@
 python-telegram-bot==12.8
 readsettings==3.4.5
-pymongo==3.6.0
-dnspython==1.15.0
+pymongo==4.4.1
+dnspython==2.4.2
 requests==2.24.0
 pytz

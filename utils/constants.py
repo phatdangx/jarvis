@@ -3,9 +3,12 @@ from config import Config
 # Bot token
 TOKEN = Config["jarvis"]["token"]
 
-ADMIN_CONTACT = "@{}".format(Config["admin"])
+SUPER_ADMIN_CONTACT = "@{}".format(Config["super_admin"])
 
-MONGO_SERVER = Config["mongodb"]["host"]
+MONGO_SERVER = "mongodb://{}:{}@{}:{}".format(Config["mongodb"]["username"],
+                                                Config["mongodb"]["password"],
+                                                Config["mongodb"]["host"],
+                                                Config["mongodb"]["port"])
 MONGO_DATABASE = Config["mongodb"]["database"]
 
 # Help template

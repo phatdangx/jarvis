@@ -2,7 +2,7 @@
 """
     Provides decorator functions for user authentication.
 """
-from utils.constants import ADMIN_CONTACT
+from utils.constants import SUPER_ADMIN_CONTACT
 from entity.user import User
 
 
@@ -35,7 +35,7 @@ def requires_user_group(*decorator_args):
             if not has_access:
                 context.bot.sendMessage(
                     chat_id=update.message.chat_id,
-                    text="⛔️ Contact {} to review your permission".format(ADMIN_CONTACT),
+                    text="⛔️ Contact {} to review your permission".format(SUPER_ADMIN_CONTACT),
                     reply_to_message_id=update.message.message_id
                 )
                 return
@@ -68,16 +68,22 @@ def verify_user_init():
             )
             
             # Check if user is allowed to use bot
-            is_allowed = user.has_been_added()
+            print(username)
+            print(user.has_been_added())
+            is_allowed = user.has_been_added() or username == SUPER_ADMIN_CONTACT
             if not is_allowed:
                 bot.sendMessage(
                     chat_id=update.message.chat_id,
-                    text="⛔️ Contact {} to set permission for you".format(ADMIN_CONTACT),
+                    text="⛔️ Contact {} to set permission for you".format(SUPER_ADMIN_CONTACT),
                     reply_to_message_id=update.message.message_id
                 )
                 return
 
+            # Log telegram_id to database
+            user.update_user_telegram_id()
+
             result = func(*args, **kwargs)
+
             return result
 
         return call

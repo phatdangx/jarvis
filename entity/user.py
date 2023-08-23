@@ -6,7 +6,6 @@ from db.user import *
 
 import json
 
-
 class User(object):
     """Represents a telegram user.
 
@@ -50,7 +49,7 @@ class User(object):
             Returns:
                 bool: True if user is in database, otherwise False
         """
-        user = find_user_by_telegram_id(self.__id)
+        user = find_user_by_telegram_id(self.__name)
         if user is None:
             return False
         return True
@@ -82,3 +81,28 @@ class User(object):
             is_group_mod = True if user["role"] == "mod" and user["group"] in groups else False
             return is_group_mod
         return False
+
+    def update_user_telegram_id(self) -> None:
+        """
+            Update telegram id after user first interaction with the bot
+        """
+        if self.__id:
+            _ = update_user(
+                {
+                    "username": self.__name
+                },
+                {
+                    "$set": {
+                        "telegram_id": self.__id
+                    }
+                }
+            )
+
+    def get_user_group(self):
+        """
+            Return user group
+        """
+        if self.__id:
+            user = find_user_by_telegram_id(self.__id)
+            return user["group"] if "group" in user else ""
+        return ""

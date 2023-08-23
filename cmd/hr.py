@@ -47,8 +47,8 @@ class HrCommand(object):
         bot = context.bot
         args = context.args
         message = ""
-        if len(args) > 1:
-            message = "Syntax: info <employee_id>"
+        if len(args) != 1:
+            message = "Syntax: info <employee id>"
         else:
             employee_id = args[0]
             message = get_employee_info(employee_id)
@@ -68,8 +68,8 @@ class HrCommand(object):
         bot = context.bot
         args = context.args
         message = ""
-        if len(args) > 1:
-            message = "Syntax: viewpto <employee_id>"
+        if len(args) != 1:
+            message = "Syntax: viewpto <employee id>"
         else:
             employee_id = args[0]
             message = view_employee_pto(employee_id)

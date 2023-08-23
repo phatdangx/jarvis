@@ -1,7 +1,8 @@
 from telegram.ext import CommandHandler
 from telegram.parsemode import ParseMode
 from utils.decorator import *
-from business.admin import *
+
+import business.admin as biz
 
 class AdminCommand(object):
     """
@@ -16,7 +17,7 @@ class AdminCommand(object):
         """
             Registers the admin commands.
         """
-        self.__dispatcher.add_handler(CommandHandler("adhelp", self.__admin_help))
+        self.__dispatcher.add_handler(CommandHandler("admin", self.__admin_help))
         self.__dispatcher.add_handler(CommandHandler("adduser", self.__add_user, pass_args=True))
         self.__dispatcher.add_handler(CommandHandler("rmu", self.__rm_user, pass_args=True))
 
@@ -71,8 +72,8 @@ class AdminCommand(object):
         """
         args = context.args
         bot = context.bot
-        if len(args) != 3:
-            message = "Usage: <employee_id> <aha_email> <group>"
+        if len(args) != 4:
+            message = "Usage: <telegram username> <employee id> <email> <group>"
             bot.sendMessage(
                 chat_id=update.message.chat_id,
                 text=message,
@@ -80,11 +81,12 @@ class AdminCommand(object):
             )
             return
         new_user = {
+            "username"
             "employee_id": args[0],
             "email": args[1],
             "group": args[2].lower(),
         }
-        message = insert_new_user(new_user)
+        message = biz.add_new_user(new_user)
         bot.sendMessage(
             chat_id=update.message.chat_id,
             text=message,
@@ -105,12 +107,12 @@ class AdminCommand(object):
         """
         bot = context.bot
         args = context.args
-        if len(args) > 1:
-            message = "Usage: rmu <employee_id>"
+        if len(args) != 1:
+            message = "Usage: rmu <employee id>"
             bot.sendMessage(chat_id=update.message.chat_id, text=message)
             return
 
-        message = remove_user_by_employee_id(args[0])
+        message = biz.remove_user_by_employee_id(args[0])
 
         bot.sendMessage(
             chat_id=update.message.chat_id, 

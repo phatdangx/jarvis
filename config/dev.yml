@@ -2,12 +2,15 @@ env: dev
 
 log_level: DEBUG
 
-admin: bunboque
+super_admin: bunboque
 
 jarvis:
-  token: 1349023026:AAGz5lgqji9iXelbS1N7t_--Q76UZUTcwVk
-  user_name: jarvis_ahm_dev_bot
+  token: 6674956871:AAHVJ1cVVHrJKkpviVJyI9XK55TnAcUq5kQ
+  user_name: jarvis1402_bot
 
 mongodb:
   host: "localhost"
   database: telegram_bot
+  username: user
+  password: admin2023
+  port: 27017

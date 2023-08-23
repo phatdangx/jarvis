@@ -10,9 +10,8 @@ from cmd.admin import AdminCommand
 from cmd.hr import HrCommand
 from cmd.marketing import MarketingCommand
 from cmd.sales import SalesCommand
-from utils.constants import TOKEN
+from utils.constants import TOKEN, HR, MARKETING, SALES
 from utils.decorator import *
-from config import Config
 
 
 @verify_user_init()
@@ -21,9 +20,23 @@ def start_handler(update, context):
 
         Sends a greeting message to the client.
     """
+    user = User(
+        name=update.message.from_user.name,
+        user_id=update.message.from_user.id,
+    )
+    group = user.get_user_group()
+    if group == HR:
+        help_cmd = "hrhelp"
+    elif group == MARKETING:
+        help_cmd = "marhelp"
+    elif group == SALES :
+        help_cmd = "saleshelp"
+    else:
+        help_cmd = "help"
+
     context.bot.sendMessage(
         chat_id=update.message.chat_id,
-        text="Hi ! I am Jarvis. Run 'help' command to see what I can do",
+        text="Hi ! I am Jarvis. Run '/{}' command to see what I can do".format(help_cmd),
         reply_to_message_id=update.message.message_id
     )
 
