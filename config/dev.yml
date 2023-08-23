@@ -5,8 +5,8 @@ log_level: DEBUG
 super_admin: bunboque
 
 jarvis:
-  token: 6674956871:AAHVJ1cVVHrJKkpviVJyI9XK55TnAcUq5kQ
-  user_name: jarvis1402_bot
+  token: ""
+  user_name: ""
 
 mongodb:
   host: "localhost"
