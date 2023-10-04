@@ -2,7 +2,7 @@ env: dev
 
 log_level: DEBUG
 
-super_admin: bunboque
+super_admin: ""
 
 jarvis:
   token: ""
