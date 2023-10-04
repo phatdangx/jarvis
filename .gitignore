@@ -63,3 +63,6 @@ __pycache__/
 
 # mount data backup
 data/
+
+# ignore dev config file
+config/dev.yml
