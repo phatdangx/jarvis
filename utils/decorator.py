@@ -5,6 +5,55 @@
 from utils.constants import SUPER_ADMIN_CONTACT
 from entity.user import User
 
+def verify_user_init():
+    """Verify if user is allowed to use the bot
+        Returns:
+            func: The decorator function.
+    """
+    def decorate(func):
+        def call(*args, **kwargs):
+            update = args[0]
+            context = args[1]
+
+            bot = context.bot
+
+            username = update.message.from_user.name
+            telegramid = update.message.from_user.id
+            user = User(
+                username=username,
+                telegramid=telegramid,
+            )
+            
+            # Check if user is allowed to use bot
+            is_allowed = user.has_been_added()
+            is_super_admin = (username == SUPER_ADMIN_CONTACT)
+            if not is_allowed and not is_super_admin:
+                bot.sendMessage(
+                    chat_id=update.message.chat_id,
+                    text="⛔️ Contact {} to set permission for you".format(SUPER_ADMIN_CONTACT),
+                    reply_to_message_id=update.message.message_id
+                )
+                return
+
+            if is_super_admin and not user.has_been_added:
+                admin = User(
+                    username=username,
+                    telegramid=telegramid,
+                    group="admin",
+                    employee_id=""
+                )
+                admin.insert_mongo("admin")
+            else:
+                # Log telegram_id to database
+                user.update_user_telegram_id()
+
+            result = func(*args, **kwargs)
+
+            return result
+
+        return call
+
+    return decorate
 
 def requires_user_group(*decorator_args):
     """Checks if the user has access to the decorated function.
@@ -47,48 +96,6 @@ def requires_user_group(*decorator_args):
 
     return decorate
 
-
-def verify_user_init():
-    """Verify if user is allowed to use the bot
-        Returns:
-            func: The decorator function.
-    """
-    def decorate(func):
-        def call(*args, **kwargs):
-            update = args[0]
-            context = args[1]
-
-            bot = context.bot
-
-            username = update.message.from_user.name
-            user_id = update.message.from_user.id
-            user = User(
-                name=username,
-                user_id=user_id,
-            )
-            
-            # Check if user is allowed to use bot
-            is_allowed = user.has_been_added() or username == SUPER_ADMIN_CONTACT
-            if not is_allowed:
-                bot.sendMessage(
-                    chat_id=update.message.chat_id,
-                    text="⛔️ Contact {} to set permission for you".format(SUPER_ADMIN_CONTACT),
-                    reply_to_message_id=update.message.message_id
-                )
-                return
-
-            # Log telegram_id to database
-            user.update_user_telegram_id()
-
-            result = func(*args, **kwargs)
-
-            return result
-
-        return call
-
-    return decorate
-
-
 def requires_admin():
     """Checks if the user has access to the decorated function.
 
@@ -128,7 +135,6 @@ def requires_admin():
         return call
 
     return decorate
-
 
 def requires_group_mod(*decorator_args):
     """Checks if the user has access to the decorated function.

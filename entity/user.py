@@ -15,9 +15,9 @@ class User(object):
             group (Optional[str]): The user's group.
     """
 
-    def __init__(self, name, user_id, group=None, employee_id=None):
-        self.__name = name
-        self.__id = user_id
+    def __init__(self, username, telegramid, group=None, employee_id=None):
+        self.__username = username
+        self.__telegramid = telegramid
         self.__group = group
         self.__employee_id = employee_id
 
@@ -33,8 +33,8 @@ class User(object):
             Returns:
                 bool: True if user is in the given group, otherwise False.
         """
-        if self.__id:
-            user = find_user_by_telegram_id(self.__id)
+        if self.__telegramid:
+            user = find_user_by_telegram_id(self.__telegramid)
             if not user:
                 return False
             is_in_groups = True if user["group"] in groups else False
@@ -49,7 +49,7 @@ class User(object):
             Returns:
                 bool: True if user is in database, otherwise False
         """
-        user = find_user_by_telegram_id(self.__name)
+        user = find_user_by_telegram_id(self.__username)
         if user is None:
             return False
         return True
@@ -60,8 +60,8 @@ class User(object):
             Returns:
                 bool: True if user is admin, otherwise False
         """
-        if self.__id:
-            user = find_user_by_telegram_id(self.__id)
+        if self.__telegramid:
+            user = find_user_by_telegram_id(self.__telegramid)
             if not user:
                 return False
             is_admin = True if user["role"] == "admin" else False
@@ -74,8 +74,8 @@ class User(object):
             Returns:
                 bool: True if user is moderator, otherwise False
         """
-        if self.__id:
-            user = find_user_by_telegram_id(self.__id)
+        if self.__telegramid:
+            user = find_user_by_telegram_id(self.__telegramid)
             if not user:
                 return False
             is_group_mod = True if user["role"] == "mod" and user["group"] in groups else False
@@ -86,14 +86,14 @@ class User(object):
         """
             Update telegram id after user first interaction with the bot
         """
-        if self.__id:
+        if self.__telegramid:
             _ = update_user(
                 {
-                    "username": self.__name
+                    "username": self.__username
                 },
                 {
                     "$set": {
-                        "telegram_id": self.__id
+                        "telegram_id": self.__telegramid
                     }
                 }
             )
@@ -102,7 +102,17 @@ class User(object):
         """
             Return user group
         """
-        if self.__id:
-            user = find_user_by_telegram_id(self.__id)
+        if self.__telegramid:
+            user = find_user_by_telegram_id(self.__telegramid)
             return user["group"] if "group" in user else ""
         return ""
+
+    def insert_mongo(self, role):
+        user = {
+            "username": self.__username,
+            "telegram_id": self.__telegramid,
+            "role": role,
+            "group": self.__group,
+            "employee_id": self.__employee_id
+        }
+        insert_new_user(user)

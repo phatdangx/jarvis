@@ -21,8 +21,8 @@ def start_handler(update, context):
         Sends a greeting message to the client.
     """
     user = User(
-        name=update.message.from_user.name,
-        user_id=update.message.from_user.id,
+        username=update.message.from_user.name,
+        telegramid=update.message.from_user.id,
     )
     group = user.get_user_group()
     if group == HR:
