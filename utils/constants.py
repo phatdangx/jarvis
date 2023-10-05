@@ -31,15 +31,15 @@ HR_HELP_DICT = {
 MAR_HELP_DICT = {
     "cp_track": HELP_TEMPLATE.format(
         command_order=1,
-        command_help="Instant view marketing campaign metric",
-        command_synctax="/campaign_track <campaign_id>",
-        command_ex="/campaign_track fb_114"
+        command_help="Fetch statistics for social media channels",
+        command_synctax="/socialstats",
+        command_ex="/socialstats"
     ),
     "cp_list": HELP_TEMPLATE.format(
         command_order=2,
-        command_help="List all of campaign in the last N days",
-        command_synctax="/cp_list <days>",
-        command_ex="/cp_list 7"
+        command_help="Get the status of current marketing campaigns",
+        command_synctax="/campaignstatus",
+        command_ex="/campaignstatus"
     )
 }
 

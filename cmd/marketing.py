@@ -18,8 +18,8 @@ class MarketingCommand(object):
             Registers the admin commands.
         """
         self.__dispatcher.add_handler(CommandHandler("marhelp", self.__user_cmd_helps))
-        self.__dispatcher.add_handler(CommandHandler("cp_track", self.__cp_track))
-        self.__dispatcher.add_handler(CommandHandler("cp_list", self.__cp_list))
+        self.__dispatcher.add_handler(CommandHandler("socialstats", self.__fetch_socialstats))
+        self.__dispatcher.add_handler(CommandHandler("campaignstatus", self.__fetch_campaignstatus))
 
     @staticmethod
     @requires_user_group(MARKETING)
@@ -40,17 +40,16 @@ class MarketingCommand(object):
     
     @staticmethod
     @requires_user_group(MARKETING)
-    def __cp_list(update, context):
-        """Command to get list of marketing campaign
+    def __fetch_socialstats(update, context):
+        """Command fetch status of company social channel
         """
         bot = context.bot
         args = context.args
         message = ""
         if len(args) > 1:
-            message = "Syntax: cp_list <days>"
+            message = "Syntax: socialstats"
         else:
-            days = args[0]
-            message = list_all_campaign(days)
+            message = fetch_socialstats()
 
         bot.sendMessage(
             chat_id=update.message.chat_id,
@@ -62,8 +61,8 @@ class MarketingCommand(object):
 
     @staticmethod
     @requires_user_group(MARKETING)
-    def __cp_track(update, context):
-        """Command to get detail metric of a campaign
+    def __fetch_campaignstatus(update, context):
+        """Command to fetch campaign status
         """
         bot = context.bot
         args = context.args
@@ -71,8 +70,7 @@ class MarketingCommand(object):
         if len(args) > 1:
             message = "Syntax: cp_list <days>"
         else:
-            cid = args[0]
-            message = get_campaign_detail(cid)
+            message = fetch_campaignstatus()
 
         bot.sendMessage(
             chat_id=update.message.chat_id,
