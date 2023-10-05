@@ -91,6 +91,7 @@ class AdminCommand(object):
             "username": args[0],
             "employee_id": args[1],
             "group": args[2].lower(),
+            "role": "user"
         }
         message = add_new_user(new_user)
         bot.sendMessage(
