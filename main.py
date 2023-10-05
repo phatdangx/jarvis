@@ -40,6 +40,7 @@ def start_handler(update, context):
         reply_to_message_id=update.message.message_id
     )
 
+
 def unsupported_command(update, context):
     # Checking if the message starts with a '/'
     if update.message.text.startswith('/'):
@@ -59,7 +60,7 @@ def main():
     updater = Updater(TOKEN, use_context=True)
     dispatcher = updater.dispatcher
     dispatcher.add_handler(CommandHandler("start", start_handler, pass_args=True))
-
+    
     # Register commands
     AdminCommand(dispatcher)
     HrCommand(dispatcher)

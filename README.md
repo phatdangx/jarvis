@@ -25,7 +25,10 @@ Jarvis is a Telegram bot equipped with a role management feature. It enables adm
 ```bash
 git clone git@github.com:phatdangx/jarvis.git
 ```
-2. Set up your environment variables. Refer to .env.example for required variables.
+2. Set up your environment variables.
+```bash
+
+```
 3. Run start script.
 - Make sure you give permision for the script
 ```bash

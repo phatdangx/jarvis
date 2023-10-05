@@ -79,7 +79,7 @@ class AdminCommand(object):
         """
         args = context.args
         bot = context.bot
-        if len(args) != 4:
+        if len(args) != 3:
             message = "Usage: <username> <employee id> <group>"
             bot.sendMessage(
                 chat_id=update.message.chat_id,

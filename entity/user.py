@@ -4,8 +4,6 @@
 """
 from db.user import *
 
-import json
-
 class User(object):
     """Represents a telegram user.
 
@@ -49,7 +47,7 @@ class User(object):
             Returns:
                 bool: True if user is in database, otherwise False
         """
-        user = find_user_by_telegram_id(self.__username)
+        user = find_user_by_username(self.__username)
         if user is None:
             return False
         return True
@@ -87,16 +85,16 @@ class User(object):
             Update telegram id after user first interaction with the bot
         """
         if self.__telegramid:
-            _ = update_user(
+            r = update_user(
                 {
                     "username": self.__username
                 },
                 {
-                    "$set": {
-                        "telegram_id": self.__telegramid
-                    }
+                    "telegram_id": self.__telegramid
                 }
             )
+            if not r:
+                logger.error('fail to log telegram id of user {}'.format(self.__username))
 
     def get_user_group(self):
         """
