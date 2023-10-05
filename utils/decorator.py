@@ -68,8 +68,6 @@ def verify_user_init():
             )
             
             # Check if user is allowed to use bot
-            print(username)
-            print(user.has_been_added())
             is_allowed = user.has_been_added() or username == SUPER_ADMIN_CONTACT
             if not is_allowed:
                 bot.sendMessage(
