@@ -17,7 +17,7 @@ class AdminCommand(object):
         """
             Registers the admin commands.
         """
-        self.__dispatcher.add_handler(CommandHandler("admin", self.__admin_help))
+        self.__dispatcher.add_handler(CommandHandler("help", self.__admin_help))
         self.__dispatcher.add_handler(CommandHandler("adduser", self.__add_user, pass_args=True))
         self.__dispatcher.add_handler(CommandHandler("rmu", self.__rm_user, pass_args=True))
 

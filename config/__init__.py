@@ -18,13 +18,12 @@ def get_config():
     return config.data
 
 
+# get from env var
 mongo_host = os.getenv("MONGO_HOST")
 mongo_username = os.getenv("MONGO_USERNAME")
 mongo_password = os.getenv("MONGO_PASSWORD")
-
 bot_token = os.getenv("BOT_TOKEN")
 bot_username = os.getenv("BOT_USERNAME")
-
 super_admin = os.getenv("SUPER_ADMIN")
 
 Config = get_config()
@@ -39,4 +38,3 @@ if bot_token:
 
 if super_admin:
     Config["super_admin"] = super_admin
-
