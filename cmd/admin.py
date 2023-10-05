@@ -45,7 +45,7 @@ class AdminCommand(object):
             "rmu": template.format(
                 command_order=2,
                 command_help="Remove user",
-                command_synctax="/rmu ",
+                command_synctax="/rmu <employee_id>",
                 command_ex="/rmu 1507890"
             )
         }
