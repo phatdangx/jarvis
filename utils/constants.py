@@ -29,13 +29,13 @@ HR_HELP_DICT = {
 }
 
 MAR_HELP_DICT = {
-    "cp_track": HELP_TEMPLATE.format(
+    "socialstats": HELP_TEMPLATE.format(
         command_order=1,
         command_help="Fetch statistics for social media channels",
         command_synctax="/socialstats",
         command_ex="/socialstats"
     ),
-    "cp_list": HELP_TEMPLATE.format(
+    "campaignstatus": HELP_TEMPLATE.format(
         command_order=2,
         command_help="Get the status of current marketing campaigns",
         command_synctax="/campaignstatus",
