@@ -17,14 +17,14 @@ class HrCommand(object):
         """
             Registers the admin commands.
         """
-        self.__dispatcher.add_handler(CommandHandler("hrhelp", self.__user_cmd_helps))
-        self.__dispatcher.add_handler(CommandHandler("info", self.__info))
-        self.__dispatcher.add_handler(CommandHandler("viewpto", self.__viewpto))
+        self.__dispatcher.add_handler(CommandHandler("hrhelp", self.__hr_cmd_helps))
+        self.__dispatcher.add_handler(CommandHandler("holidaylist", self.__get_holidaylist))
+        self.__dispatcher.add_handler(CommandHandler("training", self.__get_training_list))
 
     
     @staticmethod
     @requires_user_group(HR)
-    def __user_cmd_helps(update, context):
+    def __hr_cmd_helps(update, context):
         """Command to show help
         """
         bot = context.bot
@@ -41,17 +41,16 @@ class HrCommand(object):
 
     @staticmethod
     @requires_user_group(HR)
-    def __info(update, context):
-        """Command to get information 
+    def __get_holidaylist(update, context):
+        """Command to get list of company holiday
         """
         bot = context.bot
         args = context.args
         message = ""
-        if len(args) != 1:
-            message = "Syntax: info <employee id>"
+        if len(args) > 0:
+            message = "Syntax: holidaylist"
         else:
-            employee_id = args[0]
-            message = get_employee_info(employee_id)
+            message = get_holidaylist()
 
         bot.sendMessage(
             chat_id=update.message.chat_id,
@@ -62,17 +61,16 @@ class HrCommand(object):
 
     @staticmethod
     @requires_user_group(HR)
-    def __viewpto(update, context):
-        """Command to view employee PTO request
+    def __get_training_list(update, context):
+        """Command to get list of company training
         """
         bot = context.bot
         args = context.args
         message = ""
-        if len(args) != 1:
-            message = "Syntax: viewpto <employee id>"
+        if len(args) > 0:
+            message = "Syntax: training"
         else:
-            employee_id = args[0]
-            message = view_employee_pto(employee_id)
+            message = get_training_list()
 
         bot.sendMessage(
             chat_id=update.message.chat_id,
