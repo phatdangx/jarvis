@@ -4,7 +4,7 @@
     Jarvis is a bot with ability to verify user before executing a command
 """
 
-from telegram.ext import Updater, CommandHandler
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 from cmd.admin import AdminCommand
 from cmd.hr import HrCommand
@@ -40,6 +40,15 @@ def start_handler(update, context):
         reply_to_message_id=update.message.message_id
     )
 
+def unsupported_command(update, context):
+    # Checking if the message starts with a '/'
+    if update.message.text.startswith('/'):
+        context.bot.sendMessage(
+            chat_id=update.message.chat_id,
+            text='Sorry, I do not recognize that command.',
+            reply_to_message_id=update.message.message_id
+        )
+
 
 def main():
     """
@@ -56,6 +65,9 @@ def main():
     HrCommand(dispatcher)
     MarketingCommand(dispatcher)
     SalesCommand(dispatcher)
+
+    # Handle unsupported commands
+    updater.dispatcher.add_handler(MessageHandler(Filters.text, unsupported_command))
 
 
     # Polling update
