@@ -6,7 +6,7 @@ Jarvis is a Telegram bot equipped with a role management feature. It enables adm
 ## Features
 
 - **Admin commands**: get user lists, add user, remove user
-- **HR commands**: get employee info, view upcomming holidays
+- **HR commands**: get the list of company holidays, get training materials or schedule training sessions
 - **Marketing commands**: fetch statistics for social media channels, get the status of current marketing campaigns
 - **Sales commands**: check monthly or quarterly sales quota, fetch client information
 
