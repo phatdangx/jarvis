@@ -13,6 +13,10 @@ def find_user_by_username(username):
     user = db.user.find_one({"username":username})
     return user
 
+def find_user_by_employee_id(id):
+    user = db.user.find_one({"employee_id": id})
+    return user
+
 
 def insert_new_user(data):
     try:

@@ -2,7 +2,7 @@ from telegram.ext import CommandHandler
 from telegram.parsemode import ParseMode
 from utils.decorator import *
 
-import business.admin as biz
+from business.admin import *
 
 class AdminCommand(object):
     """
@@ -20,6 +20,7 @@ class AdminCommand(object):
         self.__dispatcher.add_handler(CommandHandler("help", self.__admin_help))
         self.__dispatcher.add_handler(CommandHandler("adduser", self.__add_user, pass_args=True))
         self.__dispatcher.add_handler(CommandHandler("rmu", self.__rm_user, pass_args=True))
+        self.__dispatcher.add_handler(CommandHandler("viewuser", self.__viewuser, pass_args=True))
 
     @staticmethod
     @requires_admin()
@@ -39,14 +40,20 @@ class AdminCommand(object):
             "adduser": template.format(
                 command_order=1,
                 command_help="Add user",
-                command_synctax="/adduser <employee_id> <email> <group>",
-                command_ex="/adduser 1507890 user@company.com sample_tele_username hr"
+                command_synctax="/adduser <username> <employee_id> <group>",
+                command_ex="/adduser johndoe 150789 hr"
             ),
             "rmu": template.format(
                 command_order=2,
                 command_help="Remove user",
                 command_synctax="/rmu <employee_id>",
-                command_ex="/rmu 1507890"
+                command_ex="/rmu 150789"
+            ),
+            "viewuser": template.format(
+                command_order=3,
+                command_help="View user detail",
+                command_synctax="/viewuser <employee_id>",
+                command_ex="/viewuser 150789"
             )
         }
         message = "*JARVIS ADMIN COMMANDS*:\n\n"
@@ -73,7 +80,7 @@ class AdminCommand(object):
         args = context.args
         bot = context.bot
         if len(args) != 4:
-            message = "Usage: <telegram username> <employee id> <email> <group>"
+            message = "Usage: <username> <employee id> <group>"
             bot.sendMessage(
                 chat_id=update.message.chat_id,
                 text=message,
@@ -81,12 +88,11 @@ class AdminCommand(object):
             )
             return
         new_user = {
-            "username"
-            "employee_id": args[0],
-            "email": args[1],
+            "username": args[0],
+            "employee_id": args[1],
             "group": args[2].lower(),
         }
-        message = biz.add_new_user(new_user)
+        message = add_new_user(new_user)
         bot.sendMessage(
             chat_id=update.message.chat_id,
             text=message,
@@ -112,7 +118,27 @@ class AdminCommand(object):
             bot.sendMessage(chat_id=update.message.chat_id, text=message)
             return
 
-        message = biz.remove_user_by_employee_id(args[0])
+        message = remove_user_by_employee_id(args[0])
+
+        bot.sendMessage(
+            chat_id=update.message.chat_id, 
+            text=message,
+            reply_to_message_id=update.message.message_id
+        )
+
+    @staticmethod
+    @requires_admin()
+    def __viewuser(update, context):
+        """Command handler to view user detail
+        """
+        bot = context.bot
+        args = context.args
+        if len(args) != 1:
+            message = "Usage: viewuser <employee id>"
+            bot.sendMessage(chat_id=update.message.chat_id, text=message)
+            return
+
+        message = viewuser(args[0])
 
         bot.sendMessage(
             chat_id=update.message.chat_id, 
