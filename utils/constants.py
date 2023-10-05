@@ -45,17 +45,17 @@ MAR_HELP_DICT = {
 
 
 SALES_HELP_DICT = {
-    "product_info": HELP_TEMPLATE.format(
+    "quota": HELP_TEMPLATE.format(
         command_order=1,
-        command_help="Instant get product information",
-        command_synctax="/product_info <product_id>",
-        command_ex="/product_info 28"
+        command_help="Check monthly or quarterly sales quota",
+        command_synctax="/quota",
+        command_ex="/quota"
     ),
     "leaderboard": HELP_TEMPLATE.format(
         command_order=2,
-        command_help="View top sales performance",
-        command_synctax="/leaderboard",
-        command_ex="/leaderboard"
+        command_help="Get client information",
+        command_synctax="/clientinfo <client_id>",
+        command_ex="/clientinfo 15"
     )
 }
 

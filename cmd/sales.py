@@ -17,13 +17,13 @@ class SalesCommand(object):
         """
             Registers the admin commands.
         """
-        self.__dispatcher.add_handler(CommandHandler("saleshelp", self.__user_cmd_helps))
-        self.__dispatcher.add_handler(CommandHandler("product_info", self.__product_info))
-        self.__dispatcher.add_handler(CommandHandler("leaderboard", self.__leaderboard))
+        self.__dispatcher.add_handler(CommandHandler("saleshelp", self.__sales_cmd_helps))
+        self.__dispatcher.add_handler(CommandHandler("quota", self.__get_quota))
+        self.__dispatcher.add_handler(CommandHandler("clientinfo", self.__get_clientinfo))
 
     @staticmethod
     @requires_user_group(SALES)
-    def __user_cmd_helps(update, context):
+    def __sales_cmd_helps(update, context):
         """Command to show help
         """
         bot = context.bot
@@ -40,17 +40,16 @@ class SalesCommand(object):
 
     @staticmethod
     @requires_user_group(SALES)
-    def __product_info(update, context):
-        """Command to get product information
+    def __get_quota(update, context):
+        """Command to check monthly or quarterly sales quota
         """
         bot = context.bot
         args = context.args
         message = ""
-        if len(args) > 1:
-            message = "Syntax: product_info <product_id>"
+        if len(args) > 0:
+            message = "Syntax: quota"
         else:
-            employee_id = args[0]
-            message = get_product_by_id(employee_id)
+            message = get_quota()
 
         bot.sendMessage(
             chat_id=update.message.chat_id,
@@ -62,11 +61,16 @@ class SalesCommand(object):
 
     @staticmethod
     @requires_user_group(SALES)
-    def __leaderboard(update, context):
-        """Command to get product information
+    def __get_clientinfo(update, context):
+        """Command to get client information
         """
         bot = context.bot
-        message = get_leaderboard()
+        args = context.args
+        message = ""
+        if len(args) > 1:
+            message = "Syntax: clientinfo <client_id>"
+        else:
+            message = get_clientinfo(args[0])
 
         bot.sendMessage(
             chat_id=update.message.chat_id,
