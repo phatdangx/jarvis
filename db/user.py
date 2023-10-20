@@ -21,7 +21,6 @@ def find_user_by_employee_id(id):
 def insert_new_user(data):
     try:
         data["create_time"] = time.time()
-        print(data)
         r = db.user.insert_one(data)
         if r.inserted_id != None:
             return True
